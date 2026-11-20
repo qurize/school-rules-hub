@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="เว็บไซต์กฎระเบียบโรงเรียน — ทดสอบความรู้ และเตือนความจำสำหรับนักเรียนและครู" />
+  <title>ระเบียบโรงเรียน · School Rules Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">📘</div>
+        <div class="brand-text">
+          <strong>ระเบียบโรงเรียน</strong>
+          <span>School Rules Hub</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="เมนูหลัก">
+        <button class="nav-item active" data-view="home">
+          <span class="nav-icon">🏠</span><span>หน้าแรก</span>
+        </button>
+        <button class="nav-item" data-view="rules">
+          <span class="nav-icon">📋</span><span>กฎระเบียบ</span>
+        </button>
+        <button class="nav-item" data-view="quiz">
+          <span class="nav-icon">🎯</span><span>แบบทดสอบ</span>
+        </button>
+        <button class="nav-item" data-view="teacher">
+          <span class="nav-icon">🛠️</span><span>หน้าครู</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="role-switch">
+          <span class="role-label">มองในมุม</span>
+          <div class="segmented" id="roleSwitch">
+            <button class="seg active" data-role="student">นักเรียน</button>
+            <button class="seg" data-role="teacher">ครู</button>
+          </div>
+        </div>
+        <p class="tiny">ข้อมูลถูกเก็บในเครื่องนี้เท่านั้น 🔒</p>
+      </div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <div class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="เปิดเมนู">☰</button>
+        <div class="topbar-title">
+          <h1 id="pageTitle">หน้าแรก</h1>
+          <p id="pageSubtitle">ภาพรวมกฎระเบียบและความก้าวหน้าของคุณ</p>
+        </div>
+        <div class="topbar-actions">
+          <div class="today"><span id="todayText"></span></div>
+          <button class="bell" id="bellBtn" aria-label="การแจ้งเตือน">
+            🔔<span class="badge" id="bellBadge">0</span>
+          </button>
+          <div class="avatar" id="avatar">นร.</div>
+        </div>
+      </header>
+
+      <main class="content" id="content">
+        <!-- ---------- HOME VIEW ---------- -->
+        <section class="view active" id="view-home">
+          <div class="hero">
+            <div class="hero-copy">
+              <span class="pill">✨ รู้กฎ · ปฏิบัติถูก · อยู่ร่วมกันดี</span>
+              <h2>มาเข้าใจกฎระเบียบ<br />กันให้มากขึ้นกันเถอะ!</h2>
+              <p>อ่านกฎสำคัญ ทบทวนสิ่งที่ควรจำ แล้วลองวัดความรู้ผ่านแบบทดสอบสนุก ๆ ได้ทุกวัน</p>
+              <div class="hero-actions">
+                <button class="btn primary" data-goto="quiz">เริ่มทำแบบทดสอบ →</button>
+                <button class="btn ghost" data-goto="rules">อ่านกฎระเบียบ</button>
+              </div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="float-card c1">📏 เครื่องแต่งกาย</div>
+              <div class="float-card c2">⏰ เข้าเรียนตรงเวลา</div>
+              <div class="float-card c3">🤝 มารยาทดี</div>
+              <div class="big-emoji">🏫</div>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-ico blue">📚</div>
+              <div><div class="stat-num" id="statRules">0</div><div class="stat-label">กฎทั้งหมด</div></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-ico green">✅</div>
+              <div><div class="stat-num" id="statQuizzes">0</div><div class="stat-label">ครั้งที่ทดสอบ</div></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-ico purple">⭐</div>
+              <div><div class="stat-num" id="statAvg">0%</div><div class="stat-label">คะแนนเฉลี่ย</div></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-ico orange">🔔</div>
+              <div><div class="stat-num" id="statDue">0</div><div class="stat-label">กฎที่ควรทบทวน</div></div>
+            </div>
+          </div>
+
+          <div class="panel-grid">
+            <div class="panel">
+              <div class="panel-head">
+                <h3>🔔 เตือนความจำวันนี้</h3>
+                <span class="muted" id="dueDateLabel"></span>
+              </div>
+              <div id="reminderList" class="reminder-list"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head">
+                <h3>📈 ความก้าวหน้าล่าสุด</h3>
+                <button class="link-btn" data-goto="quiz">ทำต่อ →</button>
+              </div>
+              <div id="progressPanel"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- RULES VIEW ---------- -->
+        <section class="view" id="view-rules">
+          <div class="toolbar">
+            <div class="search-wrap">
+              <span>🔍</span>
+              <input type="text" id="ruleSearch" placeholder="ค้นหากฎระเบียบ..." />
+            </div>
+            <div class="category-chips" id="categoryChips"></div>
+          </div>
+          <div class="rules-grid" id="rulesGrid"></div>
+        </section>
+
+        <!-- ---------- QUIZ VIEW ---------- -->
+        <section class="view" id="view-quiz">
+          <!-- setup -->
+          <div id="quizSetup" class="quiz-setup">
+            <div class="setup-card">
+              <div class="setup-illustration">🎯</div>
+              <h2>ตั้งค่าแบบทดสอบ</h2>
+              <p class="muted">เลือกหมวดหมู่และจำนวนข้อ ก่อนเริ่มลองความรู้ของคุณ</p>
+
+              <label class="field-label">หมวดหมู่</label>
+              <select id="quizCategory" class="field">
+                <option value="all">📚 ทุกหมวดหมู่</option>
+              </select>
+
+              <label class="field-label">จำนวนข้อ</label>
+              <div class="segmented wide" id="quizCount">
+                <button class="seg" data-count="5">5 ข้อ</button>
+                <button class="seg active" data-count="10">10 ข้อ</button>
+                <button class="seg" data-count="15">15 ข้อ</button>
+              </div>
+
+              <label class="field-label">เวลาต่อข้อ</label>
+              <div class="segmented wide" id="quizTime">
+                <button class="seg" data-time="0">ไม่จำกัด</button>
+                <button class="seg active" data-time="20">20 วิ</button>
+                <button class="seg" data-time="30">30 วิ</button>
+              </div>
+
+              <button class="btn primary block" id="startQuizBtn">เริ่มทำแบบทดสอบ →</button>
+            </div>
+          </div>
+
+          <!-- playing -->
+          <div id="quizPlay" class="quiz-play hidden">
+            <div class="quiz-top">
+              <div>
+                <span class="q-counter">ข้อ <b id="qIndex">1</b> / <span id="qTotal">10</span></span>
+                <div class="q-progress"><div class="q-progress-fill" id="qProgressFill"></div></div>
+              </div>
+              <div class="timer" id="timerBox">⏱️ <span id="timerValue">--</span></div>
+            </div>
+            <div class="question-card">
+              <span class="q-category" id="qCategory">หมวดหมู่</span>
+              <h2 id="qText">คำถาม</h2>
+              <div class="options" id="qOptions"></div>
+              <div class="feedback hidden" id="qFeedback"></div>
+              <div class="q-actions">
+                <button class="btn ghost" id="quitQuizBtn">ออกจากแบบทดสอบ</button>
+                <button class="btn primary hidden" id="nextQBtn">ข้อถัดไป →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- result -->
+          <div id="quizResult" class="quiz-result hidden">
+            <div class="result-card">
+              <div class="result-emoji" id="resultEmoji">🎉</div>
+              <h2 id="resultTitle">เสร็จสิ้น!</h2>
+              <p class="muted" id="resultSub"></p>
+              <div class="score-ring" id="scoreRing">
+                <div class="score-inner"><span id="scoreValue">0%</span><small>คะแนน</small></div>
+              </div>
+              <div class="result-summary" id="resultSummary"></div>
+              <div class="review-box" id="reviewBox"></div>
+              <div class="result-actions">
+                <button class="btn primary" id="retryQuizBtn">ทำอีกครั้ง 🔁</button>
+                <button class="btn ghost" data-goto="home">กลับหน้าแรก</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- TEACHER VIEW ---------- -->
+        <section class="view" id="view-teacher">
+          <div class="teacher-banner">
+            <div>
+              <span class="pill">🛠️ โหมดครู</span>
+              <h2>จัดการกฎระเบียบและดูสถิติ</h2>
+              <p class="muted">เพิ่ม แก้ไข หรือลบกฎและคำถาม รวมถึงดูภาพรวมการเรียนรู้ของนักเรียน</p>
+            </div>
+            <button class="btn primary" id="openAddBtn">+ เพิ่มกฎใหม่</button>
+          </div>
+
+          <div class="stats-grid three" id="teacherStats"></div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h3>📋 รายการกฎระเบียบ</h3>
+              <span class="muted" id="ruleCountLabel"></span>
+            </div>
+            <div class="table-wrap">
+              <table class="rule-table">
+                <thead>
+                  <tr><th>กฎ</th><th>หมวดหมู่</th><th>ความสำคัญ</th><th>จัดการ</th></tr>
+                </thead>
+                <tbody id="teacherTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- ============ MODAL ============ -->
+  <div class="modal-overlay hidden" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <h3 id="modalTitle">เพิ่มกฎระเบียบ</h3>
+        <button class="close-btn" id="closeModalBtn" aria-label="ปิด">✕</button>
+      </div>
+      <form id="ruleForm" class="modal-body">
+        <div class="form-row">
+          <label>หมวดหมู่
+            <select name="category" id="formCategory" class="field" required></select>
+          </label>
+          <label>ความสำคัญ
+            <select name="importance" class="field">
+              <option value="high">🔴 สำคัญมาก</option>
+              <option value="medium" selected>🟡 ปานกลาง</option>
+              <option value="low">🟢 ทั่วไป</option>
+            </select>
+          </label>
+        </div>
+        <label>ชื่อกฎ
+          <input name="title" class="field" placeholder="เช่น สวมเครื่องแบบให้เรียบร้อย" required />
+        </label>
+        <label>รายละเอียด
+          <textarea name="detail" class="field" rows="3" placeholder="อธิบายกฎให้เข้าใจชัดเจน" required></textarea>
+        </label>
+        <hr />
+        <p class="form-section-title">คำถามสำหรับแบบทดสอบ</p>
+        <label>คำถาม
+          <input name="question" class="field" placeholder="เช่น ข้อใดคือการแต่งกายที่ถูกต้อง?" required />
+        </label>
+        <div class="form-row">
+          <label>ตัวเลือก ก<input name="opt0" class="field" placeholder="ตัวเลือก 1" required /></label>
+          <label>ตัวเลือก ข<input name="opt1" class="field" placeholder="ตัวเลือก 2" required /></label>
+        </div>
+        <div class="form-row">
+          <label>ตัวเลือก ค<input name="opt2" class="field" placeholder="ตัวเลือก 3" required /></label>
+          <label>ตัวเลือก ง<input name="opt3" class="field" placeholder="ตัวเลือก 4" required /></label>
+        </div>
+        <label>เฉลย (เลือกตัวเลือกที่ถูกต้อง)
+          <select name="answer" class="field" required>
+            <option value="0">ก</option><option value="1">ข</option>
+            <option value="2">ค</option><option value="3">ง</option>
+          </select>
+        </label>
+        <label>คำอธิบายเพิ่มเติม
+          <textarea name="explanation" class="field" rows="2" placeholder="อธิบายว่าทำไมตัวเลือกนี้ถึงถูก"></textarea>
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="btn ghost" id="cancelModalBtn">ยกเลิก</button>
+          <button type="submit" class="btn primary" id="saveRuleBtn">บันทึกกฎ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
